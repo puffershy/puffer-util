@@ -1,0 +1,4 @@
+--  生成密码仓库test.store  
+keytool -genkey -v -alias test -dname "CN=test,OU=HE,O=CUI,L=SHENGZHEN,ST=GUANGDONG,C=CN" -keyalg RSA -keysize 2048 -keypass 5201314 -keystore test.store -storepass 5201314 -validity 10000 -storetype JCEKS  
+--  导出证书test.crt  
+keytool -exportcert -alias test -file test.crt -keystore test.store -storepass 5201314 -rfc -storetype JCEKS 
