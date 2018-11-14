@@ -2,16 +2,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>buyi-util</artifactId>
-    <packaging>jar</packaging>
-    <description>工具类-开发项目过程实用性的一些工具类</description>
-
-
     <parent>
         <groupId>com.framework</groupId>
         <artifactId>buyi-parent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
+
+    <artifactId>buyi-util</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+    <description>工具类-开发项目过程实用性的一些工具类</description>
 
     <dependencies>
         <dependency>
