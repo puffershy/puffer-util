@@ -32,6 +32,11 @@ public class SignatureUtil {
 
     private static final String SHA1WITHRSA = "SHA1WithRSA";
 
+    /**
+     * RSA2算法
+     */
+    private static final String SHA256WITHRSA = "SHA256WithRSA";
+
     private static final Charset DEFAULT_CHARSET = Charset.forName("utf-8");
 
     /**

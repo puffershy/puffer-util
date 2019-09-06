@@ -1,7 +1,10 @@
 package com.puffer.util.security;
 
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.testng.annotations.Test;
 
+import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
@@ -23,16 +26,30 @@ public class SignatureUtilTest {
 
         String privateKey = SignatureUtil.generatePrivateKey(keyPair);
         String publicKey = SignatureUtil.generatePublicKey(keyPair);
-        System.out.println("公钥串:"+publicKey);
-        System.out.println("私钥串:"+privateKey);
+        System.out.println("公钥串:" + publicKey);
+        System.out.println("私钥串:" + privateKey);
 
         String sign = SignatureUtil.sign(privateKey, data);
-        System.out.println("签名串:"+sign);
+        System.out.println("签名串:" + sign);
 
         boolean verify = SignatureUtil.verify(publicKey, data, sign);
 
         assertTrue(verify);
+    }
 
+    @Test
+    public void testOOM() {
+        BouncyCastleProvider bouncyCastleProvider = new BouncyCastleProvider();
+        try {
+            int size = 10000000;
+            for (int i = 0; i < size; i++) {
+                Cipher cipher = Cipher.getInstance("RSA", bouncyCastleProvider);
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        }
     }
 
 }
