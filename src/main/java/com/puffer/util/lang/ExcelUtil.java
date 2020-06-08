@@ -83,6 +83,9 @@ public class ExcelUtil {
      * @since 1.0.0
      */
     private static Object getValue(Cell cell) {
+        if(cell == null){
+            return "";
+        }
         Object obj = null;
         switch (cell.getCellType()) {
         case Cell.CELL_TYPE_BOOLEAN:
