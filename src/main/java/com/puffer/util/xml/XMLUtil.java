@@ -10,6 +10,24 @@ import java.io.IOException;
 import java.io.StringWriter;
 
 public class XMLUtil {
+
+    /**
+     * 实体转换成xml字符串 格式化
+     *
+     * @param obj
+     * @return
+     * @author buyi
+     * @date 2017下午5:05:36
+     * @since 1.0.0
+     */
+    public static String toXMLDom(Object obj) {
+        XStream xStream = XStreamFactory.instanceXStreamDomDriver();
+        String xml = xStream.toXML(obj);
+        // xstream的bug如果有下划线的别名，会变成"__"
+        xml = xml.replaceAll("__", "_");
+        return xml;
+    }
+
     /**
      * 实体转换成xml字符串
      *
