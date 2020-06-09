@@ -61,7 +61,7 @@ public class XStreamFactory {
 					// 设置annotation支持
 					xstreamDomDriver.autodetectAnnotations(true);
 					// 如果实体对象存在泛型变量，转换成字符串的时候，标签会增加class属性，设置null，就不会出现
-					xstreamStaxDriver.aliasSystemAttribute(null, "class");
+					xstreamDomDriver.aliasSystemAttribute(null, "class");
 					// 忽略未知元素
 					xstreamDomDriver.ignoreUnknownElements();
 				}
