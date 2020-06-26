@@ -30,7 +30,7 @@ public class ExcelUtil {
      *
      * @param filePath 文件路径
      * @param skipLine 跳过的行数
-     * @return java.util.List<java.lang.Object               [               ]>
+     * @return java.util.List<java.lang.Object                               [                               ]>
      * @author buyi
      * @date 2019年01月21日 14:23:46
      * @since 1.0.0
@@ -119,10 +119,10 @@ public class ExcelUtil {
      * @since 1.0.0
      */
     private static Workbook getWorkBook(FileInputStream fileInputStream, File file) throws IOException {
-        if (file.getName().endsWith(EXCEL_SUFFIX_XLS)
-                || file.getName().endsWith(EXCEL_SUFFIX_CSV)) {
+        if (file.getName().endsWith(EXCEL_SUFFIX_XLS)) {
             return new HSSFWorkbook(fileInputStream);
-        } else if (file.getName().endsWith(EXCEL_SUFFIX_XLSX)) {
+        } else if (file.getName().endsWith(EXCEL_SUFFIX_XLSX)
+                || file.getName().endsWith(EXCEL_SUFFIX_CSV)) {
             return new XSSFWorkbook(fileInputStream);
         }
 
