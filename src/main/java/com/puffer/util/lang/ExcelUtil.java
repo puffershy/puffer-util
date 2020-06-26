@@ -21,6 +21,7 @@ import java.util.List;
  * @since 1.0.0
  */
 public class ExcelUtil {
+    private static final String EXCEL_SUFFIX_CSV = "csv";
     private static final String EXCEL_SUFFIX_XLS = "xls";
     private static final String EXCEL_SUFFIX_XLSX = "xlsx";
 
@@ -29,7 +30,7 @@ public class ExcelUtil {
      *
      * @param filePath 文件路径
      * @param skipLine 跳过的行数
-     * @return java.util.List<java.lang.Object       [       ]>
+     * @return java.util.List<java.lang.Object               [               ]>
      * @author buyi
      * @date 2019年01月21日 14:23:46
      * @since 1.0.0
@@ -83,25 +84,25 @@ public class ExcelUtil {
      * @since 1.0.0
      */
     private static Object getValue(Cell cell) {
-        if(cell == null){
+        if (cell == null) {
             return "";
         }
         Object obj = null;
         switch (cell.getCellType()) {
-        case Cell.CELL_TYPE_BOOLEAN:
-            obj = cell.getBooleanCellValue();
-            break;
-        case Cell.CELL_TYPE_ERROR:
-            obj = cell.getErrorCellValue();
-            break;
-        case Cell.CELL_TYPE_NUMERIC:
-            obj = cell.getNumericCellValue();
-            break;
-        case Cell.CELL_TYPE_STRING:
-            obj = cell.getStringCellValue();
-            break;
-        default:
-            break;
+            case Cell.CELL_TYPE_BOOLEAN:
+                obj = cell.getBooleanCellValue();
+                break;
+            case Cell.CELL_TYPE_ERROR:
+                obj = cell.getErrorCellValue();
+                break;
+            case Cell.CELL_TYPE_NUMERIC:
+                obj = cell.getNumericCellValue();
+                break;
+            case Cell.CELL_TYPE_STRING:
+                obj = cell.getStringCellValue();
+                break;
+            default:
+                break;
         }
         return obj;
 
@@ -118,7 +119,8 @@ public class ExcelUtil {
      * @since 1.0.0
      */
     private static Workbook getWorkBook(FileInputStream fileInputStream, File file) throws IOException {
-        if (file.getName().endsWith(EXCEL_SUFFIX_XLS)) {
+        if (file.getName().endsWith(EXCEL_SUFFIX_XLS)
+                || file.getName().endsWith(EXCEL_SUFFIX_CSV)) {
             return new HSSFWorkbook(fileInputStream);
         } else if (file.getName().endsWith(EXCEL_SUFFIX_XLSX)) {
             return new XSSFWorkbook(fileInputStream);
