@@ -94,7 +94,7 @@ public class FreeMarkerUtil {
      * @date 2020年06月30日 16:41:04
      * @since 7.17.1
      */
-    public static String process(String templateCode, String templateContent, Map<String, String> params) {
+    public static String process(String templateCode, String templateContent, Map<String, Object> params) {
         try {
             Template template = instanceTemplate(templateCode, templateContent);
             StringWriter out = new StringWriter();
