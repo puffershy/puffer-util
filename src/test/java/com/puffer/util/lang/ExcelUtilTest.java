@@ -1,6 +1,7 @@
 package com.puffer.util.lang;
 
 import org.testng.annotations.Test;
+import org.testng.collections.Lists;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -61,5 +62,16 @@ public class ExcelUtilTest {
         });
 
         System.out.println(orderSet.size());
+    }
+
+    @Test
+    public void testCreateFile() throws IOException {
+        String filePath = "E:\\buyi\\doswarm\\keyword\\test20200713.xlsx";
+        List<String[]> lines = Lists.newArrayList();
+        lines.add(new String[]{"类别","颜色"});
+        lines.add(new String[]{"ceramic","11"});
+
+        ExcelUtil.createFile(filePath,lines);
+
     }
 }
