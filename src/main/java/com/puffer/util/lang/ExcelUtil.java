@@ -165,10 +165,10 @@ public class ExcelUtil {
             }
 
             // 设置宽度自适应
-            for (int o = 0; o < 5; o++) {
-                sheet.autoSizeColumn(o, true);
-                sheet.setColumnWidth(o, sheet.getColumnWidth(o) * 17 / 10);
-            }
+            // for (int o = 0; o < 5; o++) {
+            //     sheet.autoSizeColumn(o, true);
+            //     sheet.setColumnWidth(o, sheet.getColumnWidth(o) * 17 / 10);
+            // }
 
             xssfWorkbook.write(fileOutputStream);
         }
