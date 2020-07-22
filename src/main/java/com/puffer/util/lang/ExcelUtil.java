@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -28,16 +29,16 @@ import java.util.List;
  * @since 1.0.0
  */
 public class ExcelUtil {
-    private static final String EXCEL_SUFFIX_CSV = "csv";
-    private static final String EXCEL_SUFFIX_XLS = "xls";
-    private static final String EXCEL_SUFFIX_XLSX = "xlsx";
+    public static final String EXCEL_SUFFIX_CSV = "csv";
+    public static final String EXCEL_SUFFIX_XLS = "xls";
+    public static final String EXCEL_SUFFIX_XLSX = "xlsx";
 
     /**
      * 读取excle
      *
      * @param filePath 文件路径
      * @param skipLine 跳过的行数
-     * @return java.util.List<java.lang.Object                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               [                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ]>
+     * @return java.util.List<java.lang.Object [ ]>
      * @author buyi
      * @date 2019年01月21日 14:23:46
      * @since 1.0.0
@@ -76,6 +77,38 @@ public class ExcelUtil {
                 list.add(values);
             }
 
+        }
+
+        return list;
+    }
+
+    public static List<Object[]> readFile(InputStream inputStream, int skipLine, String fileSuffix) throws IOException {
+        List<Object[]> list = Lists.newArrayList();
+        Workbook workbook = getWorkBook(inputStream, fileSuffix);
+
+        //取第一个
+        Sheet sheet = workbook.getSheetAt(0);
+
+        int count = 0;
+        for (Row row : sheet) {
+            if (count < skipLine) {
+                //跳过指定的行数
+                count++;
+                continue;
+            }
+
+            //获取最大列
+            int lastCellNum = row.getLastCellNum();
+            Object[] values = new Object[lastCellNum];
+            for (int i = 0; i < lastCellNum; i++) {
+                Cell cell = row.getCell(i);
+
+                Object value = getValue(cell);
+
+                values[i] = value;
+            }
+
+            list.add(values);
         }
 
         return list;
@@ -131,6 +164,17 @@ public class ExcelUtil {
         } else if (file.getName().endsWith(EXCEL_SUFFIX_XLSX)
                 || file.getName().endsWith(EXCEL_SUFFIX_CSV)) {
             return new XSSFWorkbook(fileInputStream);
+        }
+
+        return null;
+    }
+
+    private static Workbook getWorkBook(InputStream inputStream, String fileSuffix) throws IOException {
+        if (fileSuffix.endsWith(EXCEL_SUFFIX_XLS)) {
+            return new HSSFWorkbook(inputStream);
+        } else if (fileSuffix.endsWith(EXCEL_SUFFIX_XLSX)
+                || fileSuffix.endsWith(EXCEL_SUFFIX_CSV)) {
+            return new XSSFWorkbook(inputStream);
         }
 
         return null;
