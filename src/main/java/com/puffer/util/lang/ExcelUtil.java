@@ -2,23 +2,10 @@ package com.puffer.util.lang;
 
 import com.google.common.collect.Lists;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFFont;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.*;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.List;
 
 /**
@@ -129,20 +116,20 @@ public class ExcelUtil {
         }
         Object obj = null;
         switch (cell.getCellType()) {
-        case Cell.CELL_TYPE_BOOLEAN:
-            obj = cell.getBooleanCellValue();
-            break;
-        case Cell.CELL_TYPE_ERROR:
-            obj = cell.getErrorCellValue();
-            break;
-        case Cell.CELL_TYPE_NUMERIC:
-            obj = cell.getNumericCellValue();
-            break;
-        case Cell.CELL_TYPE_STRING:
-            obj = cell.getStringCellValue();
-            break;
-        default:
-            break;
+            case Cell.CELL_TYPE_BOOLEAN:
+                obj = cell.getBooleanCellValue();
+                break;
+            case Cell.CELL_TYPE_ERROR:
+                obj = cell.getErrorCellValue();
+                break;
+            case Cell.CELL_TYPE_NUMERIC:
+                obj = cell.getNumericCellValue();
+                break;
+            case Cell.CELL_TYPE_STRING:
+                obj = cell.getStringCellValue();
+                break;
+            default:
+                break;
         }
         return obj;
 
@@ -178,6 +165,34 @@ public class ExcelUtil {
         }
 
         return null;
+    }
+
+    public static byte[] createFile(List<String[]> lines) throws IOException {
+        XSSFWorkbook xssfWorkbook = new XSSFWorkbook();
+        XSSFSheet sheet = xssfWorkbook.createSheet();
+        XSSFFont font = xssfWorkbook.createFont();
+        font.setBold(true);
+        XSSFCellStyle cellStyle = xssfWorkbook.createCellStyle();
+        cellStyle.setFont(font);
+        cellStyle.setAlignment(HorizontalAlignment.CENTER);
+
+        for (int i = 0; i < lines.size(); i++) {
+            XSSFRow row = sheet.createRow(i);
+            String[] strings = lines.get(i);
+            for (int i1 = 0; i1 < strings.length; i1++) {
+                XSSFCell cell = row.createCell(i1);
+                cell.setCellValue(strings[i1]);
+
+                if (i == 0) {
+                    cell.setCellStyle(cellStyle);
+                }
+            }
+        }
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        xssfWorkbook.write(outputStream);
+
+        return outputStream.toByteArray();
     }
 
     public static boolean createFile(String filePath, List<String[]> lines) throws IOException {
