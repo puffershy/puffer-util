@@ -1,11 +1,16 @@
 package com.puffer.util.lang;
 
+import com.csvreader.CsvReader;
 import com.google.common.collect.Lists;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.util.List;
 
 /**
@@ -69,7 +74,13 @@ public class ExcelUtil {
         return list;
     }
 
-    public static List<Object[]> readFile(InputStream inputStream, int skipLine, String fileSuffix) throws IOException {
+    public static List<Object[]> readFile(InputStream inputStream, int skipLine, String fileSuffix) throws Exception {
+        if(fileSuffix.endsWith(EXCEL_SUFFIX_CSV)){
+            //如果是csv
+            return readFileCsv(inputStream,skipLine);
+        }
+
+
         List<Object[]> list = Lists.newArrayList();
         Workbook workbook = getWorkBook(inputStream, fileSuffix);
 
@@ -99,6 +110,26 @@ public class ExcelUtil {
         }
 
         return list;
+    }
+
+    private static List<Object[]> readFileCsv(InputStream inputStream, int skipLine) throws IOException {
+        int i = 1;
+        List<Object[]> list = Lists.newArrayList();
+        CsvReader csvReader = new CsvReader(inputStream, Charset.forName("UTF-8"));
+        while (csvReader.readRecord()) {
+            if(i++ <= skipLine){
+                continue;
+            }
+
+            if(StringUtils.isBlank(csvReader.getRawRecord().trim())){
+                continue;
+            }
+
+            list.add(csvReader.getRawRecord().split("\t"));
+        }
+
+        return list;
+
     }
 
     /**
@@ -156,7 +187,7 @@ public class ExcelUtil {
         return null;
     }
 
-    private static Workbook getWorkBook(InputStream inputStream, String fileSuffix) throws IOException {
+    private static Workbook getWorkBook(InputStream inputStream, String fileSuffix) throws IOException, InvalidFormatException {
         if (fileSuffix.endsWith(EXCEL_SUFFIX_XLS)) {
             return new HSSFWorkbook(inputStream);
         } else if (fileSuffix.endsWith(EXCEL_SUFFIX_XLSX)

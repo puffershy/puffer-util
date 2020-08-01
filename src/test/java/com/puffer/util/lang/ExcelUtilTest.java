@@ -1,9 +1,11 @@
 package com.puffer.util.lang;
 
+import org.apache.commons.lang3.StringUtils;
 import org.testng.annotations.Test;
 import org.testng.collections.Lists;
 
-import java.io.IOException;
+import java.io.*;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -72,6 +74,22 @@ public class ExcelUtilTest {
         lines.add(new String[]{"ceramic","11"});
 
         ExcelUtil.createFile(filePath,lines);
+
+    }
+
+    @Test
+    public void testTestReadFile() throws Exception {
+
+        String filePath = "E:\\download\\Keyword Stats 2020-08-01 at 11_50_52.csv";
+        InputStream inputStream = new FileInputStream(new File(filePath));
+        List<Object[]> objects = ExcelUtil.readFile(inputStream, 3, filePath);
+        for (Object[] object : objects) {
+//            StringUtils.join(object);
+            for (Object o : object) {
+                System.out.print(String.valueOf(o).trim()+" , ");
+            }
+            System.out.println();
+        }
 
     }
 }
