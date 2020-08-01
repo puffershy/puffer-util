@@ -133,7 +133,7 @@ public enum CaseFormat {
   UPPER_SPACE(CharMatcher.inRange('A', 'Z'), " ") {
     @Override
     String normalizeWord(String word) {
-      return firstCharOnlyToUpper(word);
+      return firstCharOnlyToUpper2(word);
     }
 
   }
@@ -244,5 +244,11 @@ public enum CaseFormat {
     return (word.isEmpty())
         ? word
         : Ascii.toUpperCase(word.charAt(0)) + Ascii.toLowerCase(word.substring(1));
+  }
+
+  private static String firstCharOnlyToUpper2(String word) {
+    return (word.isEmpty())
+            ? word
+            : Ascii.toUpperCase(word.charAt(0)) + word.substring(1);
   }
 }
