@@ -1,6 +1,7 @@
 package com.puffer.util.lang;
 
 
+import com.google.common.base.CaseFormat;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -55,5 +56,12 @@ public class CaseFormatUtilTest {
 		System.out.println("* " + underScore3 + " --> " + CaseFormatUtil.underScoreToUpperCamel(underScore3));
 		System.out.println("* " + underScore4 + " --> " + CaseFormatUtil.underScoreToUpperCamel(underScore4));
 		System.out.println("* " + underScore5 + " --> " + CaseFormatUtil.underScoreToUpperCamel(underScore5));
+	}
+
+	@Test
+	public void testSpaceToUpperFirstChar(){
+		String  str = "hello world say Hi Pu buyi";
+		System.out.println(CaseFormatUtil.spaceToUpperFirstChar(str));
+//		System.out.println(CaseFormat.UPPER_CAMEL);
 	}
 }
