@@ -60,8 +60,9 @@ public class CaseFormatUtilTest {
 
 	@Test
 	public void testSpaceToUpperFirstChar(){
-		String  str = "t-Rex hello world say Hi Pu buyi";
+		String  str = "t-Rex hello world say Hi Pu buyi For AT ";
 		System.out.println(CaseFormatUtil.spaceToUpperFirstChar(str));
+		System.out.println(CaseFormatUtil.spaceToUpperFirstCharIgnorePrep(str));
 //		System.out.println(CaseFormat.UPPER_CAMEL);
 	}
 }

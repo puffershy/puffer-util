@@ -1,6 +1,9 @@
 package com.puffer.util.lang;
 
 import com.google.common.base.CaseFormat;
+import com.google.common.collect.Lists;
+
+import java.util.List;
 
 /**
  * 字符格式转换工具类
@@ -10,6 +13,7 @@ import com.google.common.base.CaseFormat;
  * @since 1.0.0
  */
 public class CaseFormatUtil {
+    public static final List<String> PREP_LIST = Lists.newArrayList("in", "on", "with", "for", "at", "about", "under", "of", "from");
 
     /**
      * 将驼峰命名法的字符转换成下滑线命名法，并强制转换成小写<br>
@@ -107,5 +111,18 @@ public class CaseFormatUtil {
      */
     public static String spaceToUpperFirstChar(String str) {
         return CaseFormat.UPPER_SPACE_SPEPARATOR.to(CaseFormat.UPPER_SPACE, str);
+    }
+
+    /**
+     * 空格 首字符大写  介词小写
+     *
+     * @param str
+     * @return java.lang.String
+     * @author puffer
+     * @date 2020年08月02日 00:39:04
+     * @since 1.0.0
+     */
+    public static String spaceToUpperFirstCharIgnorePrep(String str) {
+        return CaseFormat.UPPER_SPACE_SPEPARATOR.to(CaseFormat.UPPER_SPACE_PREP, str);
     }
 }
